@@ -1,3 +1,6 @@
 /.xmake
 compile_commands.json
 /build
+
+#these should stay private
+/scripts  
