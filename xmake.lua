@@ -14,6 +14,9 @@ target("Reactor")
     -- Include Directories
     add_includedirs("extern/vendor")
     add_includedirs("src")
+
+    -- Source modules
+    add_files("extern/vendor/nuclear/**.cpp")
 target_end()
 
 target("Test")
@@ -30,4 +33,7 @@ target("Test")
     -- Include Directories
     add_includedirs("extern/vendor")
     add_includedirs("src")
+
+    -- Source modules
+    add_files("extern/vendor/nuclear/**.cpp")
 target_end()
