@@ -60,8 +60,14 @@ namespace nuclear
             m_DynamicConstants.push_back(constant);
             return constant;
         }
+
+        DynamicConstant* AddConstant(DynamicConstant constant)
+        {
+            auto real = new DynamicConstant(constant);
+            m_DynamicConstants.push_back(real);
+            return real;
+        }
     };
-    
 }
 
 #endif /* NUCLEARCONSTANTS_HPP */

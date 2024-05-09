@@ -3,13 +3,19 @@
 /*
 * The main nuclear reactor engine code
 */
+#include "NuclearConstants.hpp"
 
 namespace nuclear
 {
     /// @brief Nuclear Reactor Engine
     class Engine
     {
-
+        public:
+        DynamicConstantManager& GetConstMgr();
+        void LoadConstants(std::vector<DynamicConstant> constants);
+        private:
+        // manage constants
+        DynamicConstantManager m_DynConstMgr;
     };
 }
 

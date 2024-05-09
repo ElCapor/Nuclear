@@ -23,6 +23,10 @@ This will generate Test.exe (Unit tests) and Reactor.exe (Demo App)
 
 UML Diagram can be found here : [UML Diagram](https://github.com/ElCapor/ReactorUML/tree/main)
 
+
+# Notes to myself
+Every data should be possibly loaded at run time from lua tables
+
 # Credit
 @SrAzber - All the calculations and original lua code
 
