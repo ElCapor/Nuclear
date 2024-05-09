@@ -3,4 +3,5 @@ An attempt at writing an efficient library for nuclear reactor physics calculati
 
 # Credit
 @SrAzber - All the calculations and original lua code
+
 @ElCapor - C++ Port
