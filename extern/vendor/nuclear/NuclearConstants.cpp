@@ -1,10 +1,8 @@
 #include "NuclearConstants.hpp"
 
-std::vector<nuclear::DynamicConstant*> nuclear::m_DynamicConstants = {};
-
-nuclear::DynamicConstant* nuclear::GetConstant(std::string name)
+nuclear::DynamicConstant* nuclear::DynamicConstantManager::GetConstant(std::string name)
 {
-    for (auto& constant : nuclear::m_DynamicConstants)
+    for (auto& constant : m_DynamicConstants)
     {
         if (constant->Name() == name)
             return constant;

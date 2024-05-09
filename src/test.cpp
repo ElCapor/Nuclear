@@ -25,10 +25,11 @@ TEST_CASE("Testing nuclear::DynamicConstant") {
         CHECK(c4.Name() == "dbl");
     }
 
-    SUBCASE("Constant map") {
-        nuclear::AddConstant<double>(3e8, "celerity");
+    SUBCASE("DynamicConstantManager test") {
+        nuclear::DynamicConstantManager mgr;
+        mgr.AddConstant<double>(3e8, "celerity");
 
-        CHECK(nuclear::GetConstant("celerity") != nullptr);
-        CHECK(nuclear::GetConstant("celerity")->GetValue<double>() == 3e8);
+        CHECK(mgr.GetConstant("celerity") != nullptr);
+        CHECK(mgr.GetConstant("celerity")->GetValue<double>() == 3e8);
     }
 }

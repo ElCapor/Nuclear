@@ -45,18 +45,23 @@ namespace nuclear
         std::string name; // name of constant
     };
     
-    extern std::vector<DynamicConstant*> m_DynamicConstants;
-
-    DynamicConstant* GetConstant(std::string name);
-    
-
-    template <typename T>
-    DynamicConstant* AddConstant(T val, std::string name)
+    /// @brief Manage dynamic constants
+    class DynamicConstantManager
     {
-        auto constant = new DynamicConstant(val, name);
-        m_DynamicConstants.push_back(constant);
-        return constant;
-    }
+    public:
+        std::vector<DynamicConstant*> m_DynamicConstants = {};
+
+        DynamicConstant* GetConstant(std::string name);
+        
+        template <typename T>
+        DynamicConstant* AddConstant(T val, std::string name)
+        {
+            auto constant = new DynamicConstant(val, name);
+            m_DynamicConstants.push_back(constant);
+            return constant;
+        }
+    };
+    
 }
 
 #endif /* NUCLEARCONSTANTS_HPP */
