@@ -29,5 +29,6 @@ TEST_CASE("Testing nuclear::DynamicConstant") {
         nuclear::AddConstant<double>(3e8, "celerity");
 
         CHECK(nuclear::GetConstant("celerity") != nullptr);
+        CHECK(nuclear::GetConstant("celerity")->GetValue<double>() == 3e8);
     }
 }
