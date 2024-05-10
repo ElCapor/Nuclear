@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "cppStandard": "c++23",
+            "intelliSenseMode": "windows-msvc-x64",
+            "compilerPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\Tools\\MSVC\\14.36.32532\\bin\\Hostx64\\x64\\cl.exe",
+            "cStandard": "c17",
+            "compileCommands": ".vscode/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
