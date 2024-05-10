@@ -1,0 +1,3 @@
+[submodule "extern/vendor/luaconfig"]
+	path = extern/vendor/luaconfig
+	url = https://github.com/ElCapor/lua-config-cpp-upgraded.git
