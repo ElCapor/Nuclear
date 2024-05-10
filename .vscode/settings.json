@@ -66,6 +66,11 @@
         "xmemory": "cpp",
         "xstring": "cpp",
         "xtree": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "chrono": "cpp",
+        "codecvt": "cpp",
+        "forward_list": "cpp",
+        "variant": "cpp",
+        "xstddef": "cpp"
     }
 }
