@@ -3,3 +3,5 @@ reactorParameters = {
     InitialN = 1,
     Resolution = 2,
 }
+
+return reactorParameters

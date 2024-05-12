@@ -5,6 +5,7 @@ add_requires("luajit")
 target("Reactor")
     set_kind("binary")
     set_languages("cxx23")
+    set_symbols("debug")
     -- Source files
     add_files("src/**.cpp")
     add_files("src/**.c")

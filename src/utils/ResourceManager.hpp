@@ -6,7 +6,7 @@ namespace fs = std::filesystem;
 class ResourceManager
 {
 public:
-
+    ResourceManager() : m_ResourcesPath(fsutils::executableDirectory().concat("\\resources")) {}
     fs::path& ResourcesPath() {return m_ResourcesPath;}
     fs::path& ConfigPath() {return m_ResourcesPath.concat("\\config");}
     fs::path& EngineConfigPath() {return ConfigPath().concat("\\engine");}

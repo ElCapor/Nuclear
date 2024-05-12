@@ -60,6 +60,11 @@ namespace fsutils
     }
 
     std::string loadFile(const std::string &name) { return loadFile(name.c_str()); };
+    
+    fs::path executableDirectory()
+    {
+        return fs::current_path();
+    }
 }
 
 #endif /* FILESYSTEMUTILS_HPP */
