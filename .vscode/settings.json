@@ -71,6 +71,11 @@
         "codecvt": "cpp",
         "forward_list": "cpp",
         "variant": "cpp",
-        "xstddef": "cpp"
+        "xstddef": "cpp",
+        "_70_exception": "cpp",
+        "_70_new": "cpp",
+        "_70_xstddef": "cpp",
+        "unordered_map": "cpp",
+        "functional": "cpp"
     }
 }

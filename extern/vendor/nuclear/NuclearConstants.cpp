@@ -21,7 +21,7 @@ void nuclear::DynamicConstantManager::AddConstant(luaconf::Value val, std::strin
         m_Constants[constantName] = val;
         return;
     }
-    printf("A constant with the name %s already exists, this one will not be added unless the replace option is used", constantName.c_str());
+    printf("A constant with the name %s already exists, this one will not be added unless the replace option is used\n", constantName.c_str());
 }
 
 std::map<std::string, luaconf::Value> &nuclear::DynamicConstantManager::Map()

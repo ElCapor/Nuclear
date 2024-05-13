@@ -67,6 +67,7 @@ private:
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+    Console::get()->open();
     App* app = App::get();
     app->GetGuiManager().AddWidget(NuclearMainWidget::get());
     app->Run();
