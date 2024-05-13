@@ -12,6 +12,7 @@ namespace nuclear
     {
         public:
         DynamicConstantManager& GetConstMgr();
+        void StartSimulation();
         private:
         // manage constants
         DynamicConstantManager m_DynConstMgr;

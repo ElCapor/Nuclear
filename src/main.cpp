@@ -9,6 +9,8 @@
 #include "utils/console/console.hpp"
 namespace fs = std::filesystem;
 
+// TODO : make a constants browser/editor
+
 class NuclearMainWidget : public Widget, public Singleton<NuclearMainWidget>
 {
 public:
@@ -37,11 +39,21 @@ public:
         }
     }
 
+    // TODO : Replace this paste with an actual function
     void LoadConstants()
     {
         // replace with all ur constant logic
         luaconf::Value config;
         bool ret = luaconf::Parse(rsrc->ReadEngineConfig("reactorParameters"), config);
+        if (ret)
+        {
+            for (auto& val : config.Get<luaconf::object_t>())
+            {
+                // TODO: ADD A SYSTEM TO PARSE NESTED TABLES AND MAKE THEM USE A NAMESPACE CONVENTION IF WANTED
+                engine->GetConstMgr().AddConstant(val.second, val.first, m_forceLoad);
+            }
+        }
+        ret = luaconf::Parse(rsrc->ReadEngineConfig("constants"), config);
         if (ret)
         {
             for (auto& val : config.Get<luaconf::object_t>())
