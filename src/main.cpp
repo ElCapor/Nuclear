@@ -29,12 +29,20 @@ public:
     {
         if (ImGui::Begin("Nuclear Simulator"))
         {
-            if (ImGui::Button("Load Constants"))
-                LoadConstants();
-            ImGui::SameLine();
-            ImGui::Checkbox("Force ?", &m_forceLoad);
-            if (ImGui::Button("Print constants"))
-                PrintConstants();
+            if (ImGui::BeginTabBar("Tabs"))
+            {
+                if (ImGui::BeginTabItem("Constants"))
+                {
+                    if (ImGui::Button("Load Constants"))
+                        LoadConstants();
+                    ImGui::SameLine();
+                    ImGui::Checkbox("Force ?", &m_forceLoad);
+                    if (ImGui::Button("Print constants"))
+                        PrintConstants();
+                    ImGui::EndTabItem();
+                }
+                ImGui::EndTabBar();
+            }
             ImGui::End();
         }
     }
@@ -43,27 +51,7 @@ public:
     void LoadConstants()
     {
         // replace with all ur constant logic
-        luaconf::Value config;
-        bool ret = luaconf::Parse(rsrc->ReadEngineConfig("reactorParameters"), config);
-        if (ret)
-        {
-            for (auto& val : config.Get<luaconf::object_t>())
-            {
-                // TODO: ADD A SYSTEM TO PARSE NESTED TABLES AND MAKE THEM USE A NAMESPACE CONVENTION IF WANTED
-                engine->GetConstMgr().AddConstant(val.second, val.first, m_forceLoad);
-            }
-        }
-        ret = luaconf::Parse(rsrc->ReadEngineConfig("constants"), config);
-        if (ret)
-        {
-            for (auto& val : config.Get<luaconf::object_t>())
-            {
-                // TODO: ADD A SYSTEM TO PARSE NESTED TABLES AND MAKE THEM USE A NAMESPACE CONVENTION IF WANTED
-                engine->GetConstMgr().AddConstant(val.second, val.first, m_forceLoad);
-            }
-            return;
-        }
-        Console::get()->error("Failed to load config...");
+        ParseConfig("constants");
     }
 
     void PrintConstants()
@@ -72,6 +60,23 @@ public:
         {
             std::cout << val.first << " " << val.second << std::endl;
         }
+    }
+
+    bool ParseConfig(std::string configName)
+    {
+        luaconf::Value config;
+        bool ret = luaconf::Parse(rsrc->ReadEngineConfig(configName), config);
+        if (ret)
+        {
+            for (auto& val : config.Get<luaconf::object_t>())
+            {
+                // TODO: ADD A SYSTEM TO PARSE NESTED TABLES AND MAKE THEM USE A NAMESPACE CONVENTION IF WANTED
+                engine->GetConstMgr().AddConstant(val.second, val.first, m_forceLoad);
+            }
+        }
+        if (!ret)
+            Console::get()->error("[NON FATAL] Failed to parse config %s...\n", configName.c_str());
+        return ret;
     }
 private:
     nuclear::Engine* engine;
