@@ -29,6 +29,8 @@ public:
         {
             if (ImGui::Button("Load Constants"))
                 LoadConstants();
+            ImGui::SameLine();
+            ImGui::Checkbox("Force ?", &m_forceLoad);
             if (ImGui::Button("Print constants"))
                 PrintConstants();
             ImGui::End();
@@ -45,7 +47,7 @@ public:
             for (auto& val : config.Get<luaconf::object_t>())
             {
                 // TODO: ADD A SYSTEM TO PARSE NESTED TABLES AND MAKE THEM USE A NAMESPACE CONVENTION IF WANTED
-                engine->GetConstMgr().AddConstant(val.second, val.first);
+                engine->GetConstMgr().AddConstant(val.second, val.first, m_forceLoad);
             }
             return;
         }
@@ -62,6 +64,7 @@ public:
 private:
     nuclear::Engine* engine;
     ResourceManager* rsrc;
+    bool m_forceLoad = false; // force the loading of constants (hot reload for example)
 };
 
 
