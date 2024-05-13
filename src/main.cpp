@@ -4,19 +4,38 @@
 #include <luaconfig/luaconf.h>
 #include <filesystem>
 #include "utils/ResourceManager.hpp"
-
+#include <Windows.h>
+#include "app.hpp"
 namespace fs = std::filesystem;
 
-int main()
+class NuclearMainWidget : public Widget, public Singleton<NuclearMainWidget>
 {
-    nuclear::Engine* engine = new nuclear::Engine();
-    ResourceManager* rsrc = new ResourceManager();
-    std::cout << rsrc->ResourcesPath() << std::endl;
-    luaconf::Value reactorConfig;
-    bool ret = luaconf::Parse(rsrc->ReadEngineConfig("reactorParameters.lua"), reactorConfig);
-    if (ret)
-        std::cout << reactorConfig << std::endl;
-    delete engine;
-    delete rsrc;
+public:
+    NuclearMainWidget()
+    {
+        engine = new nuclear::Engine();
+        rsrc = new ResourceManager();
+    }
+
+    void Init() override
+    {
+        setName("NuclearWidget");
+    }
+
+    void Render(double dt) override
+    {
+        ImGui::ShowDemoWindow();
+    }
+private:
+    nuclear::Engine* engine;
+    ResourceManager* rsrc;
+};
+
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+    App* app = App::get();
+    app->GetGuiManager().AddWidget(NuclearMainWidget::get());
+    app->Run();
     return 0;
 }

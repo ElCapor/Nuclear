@@ -1,3 +1,6 @@
 [submodule "extern/vendor/luaconfig"]
 	path = extern/vendor/luaconfig
 	url = https://github.com/ElCapor/lua-config-cpp-upgraded.git
+[submodule "extern/vendor/imgui"]
+	path = extern/vendor/imgui
+	url = https://github.com/ocornut/imgui.git
