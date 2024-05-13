@@ -12,12 +12,12 @@ namespace nuclear
     {
         public:
         DynamicConstantManager& GetConstMgr();
-        void LoadConstants(std::vector<DynamicConstant> constants);
+        void StartSimulation();
         private:
         // manage constants
         DynamicConstantManager m_DynConstMgr;
     };
-}
+};
 
 
 #endif

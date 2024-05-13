@@ -1,8 +1,11 @@
 #include "NuclearEngine.hpp"
 
-void nuclear::Engine::LoadConstants(std::vector<DynamicConstant> constants) {
-    for (auto& constant : constants)
-    {
-        m_DynConstMgr.AddConstant(constant);
-    }
+nuclear::DynamicConstantManager& nuclear::Engine::GetConstMgr()
+{
+    return m_DynConstMgr;
+}
+
+void nuclear::Engine::StartSimulation()
+{
+    
 }

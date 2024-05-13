@@ -1,11 +1,30 @@
 #include "NuclearConstants.hpp"
 
-nuclear::DynamicConstant* nuclear::DynamicConstantManager::GetConstant(std::string name)
+namespace Nuclear
 {
-    for (auto& constant : m_DynamicConstants)
+
+}
+
+luaconf::Value &nuclear::DynamicConstantManager::GetConstant(std::string name)
+{
+    for (auto& val : m_Constants)
+        if (val.first == name)
+            return val.second;
+    auto v = luaconf::Value("NoConstant");
+    return v;
+}
+
+void nuclear::DynamicConstantManager::AddConstant(luaconf::Value val, std::string constantName, bool replace)
+{
+    if (m_Constants.find(constantName) == m_Constants.end() || replace)
     {
-        if (constant->Name() == name)
-            return constant;
+        m_Constants[constantName] = val;
+        return;
     }
-    return nullptr;
+    printf("A constant with the name %s already exists, this one will not be added unless the replace option is used\n", constantName.c_str());
+}
+
+std::map<std::string, luaconf::Value> &nuclear::DynamicConstantManager::Map()
+{
+    return m_Constants;
 }
