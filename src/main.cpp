@@ -27,6 +27,7 @@ public:
 
     void Render(double dt) override
     {
+        ImGui::ShowDemoWindow();
         if (ImGui::Begin("Nuclear Simulator"))
         {
             if (ImGui::BeginTabBar("Tabs"))
@@ -43,6 +44,7 @@ public:
                 }
                 ImGui::EndTabBar();
             }
+            RenderConstantsTable();
             ImGui::End();
         }
     }
@@ -62,11 +64,41 @@ public:
         }
     }
 
+    void RenderConstantsTable()
+    {
+        if (ImGui::BeginTable("ConstantsTable", 2))
+        {
+            ImGui::TableSetupColumn("Name");
+            ImGui::TableSetupColumn("Value");
+            ImGui::TableHeadersRow();
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            bool open = ImGui::TreeNodeEx("<root>");
+            ImGui::TableNextColumn();
+            ImGui::TextDisabled("--");
+            if (open)
+            {
+                for (auto& val : engine->GetConstMgr().Map())
+                {
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text(val.first.c_str());
+                    ImGui::TableNextColumn();
+                    std::stringstream ss;
+                    ss << val.second;
+                    ImGui::Text(ss.str().c_str());
+                }
+                ImGui::TreePop();
+            }
+            ImGui::EndTable();
+        }
+    }
+
     bool ParseConfig(std::string configName)
     {
         luaconf::Value config;
         bool ret = luaconf::Parse(rsrc->ReadEngineConfig(configName), config);
-        if (ret)
+        if (ret && config.Type() == luaconf::ValueType::TYPE_OBJECT)
         {
             for (auto& val : config.Get<luaconf::object_t>())
             {
