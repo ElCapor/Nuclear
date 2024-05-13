@@ -76,6 +76,7 @@ public:
         }
         if (!ret)
             Console::get()->error("[NON FATAL] Failed to parse config %s...\n", configName.c_str());
+            
         return ret;
     }
 private:
