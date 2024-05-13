@@ -29,6 +29,8 @@ namespace nuclear
         /// @param val the constant to add
         /// @param constantName the name of the constant
         void AddConstant(luaconf::Value val, std::string constantName, bool replace = false);
+
+        std::map<std::string, luaconf::Value>& Map();
     private:
        std::map<std::string, luaconf::Value> m_Constants;
     };

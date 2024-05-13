@@ -16,7 +16,7 @@ namespace nuclear
         // manage constants
         DynamicConstantManager m_DynConstMgr;
     };
-}
+};
 
 
 #endif

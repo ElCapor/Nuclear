@@ -12,7 +12,7 @@ public:
     fs::path& EngineConfigPath() {return ConfigPath().concat("\\engine");}
     fs::path& DataPath() {return m_ResourcesPath.concat("\\data");}
 
-    std::string ReadEngineConfig(std::string m_name) {return fsutils::loadFile(EngineConfigPath().concat("\\" + m_name).string());};
+    std::string ReadEngineConfig(std::string m_name) {return fsutils::loadFile(EngineConfigPath().concat("\\" + m_name + ".lua").string());};
 private:
     fs::path m_ResourcesPath;
 };
