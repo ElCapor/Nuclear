@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include "app.hpp"
 #include "utils/console/console.hpp"
+#include <nuclear/Atomic.hpp>
 namespace fs = std::filesystem;
 
 // TODO : make a constants browser/editor
@@ -18,6 +19,7 @@ public:
     {
         engine = new nuclear::Engine();
         rsrc = new ResourceManager();
+        nucleusMgr = new nuclear::atomic::NucleusManager();
     }
 
     void Init() override
@@ -40,6 +42,8 @@ public:
                     ImGui::Checkbox("Force ?", &m_forceLoad);
                     if (ImGui::Button("Print constants"))
                         PrintConstants();
+                    if (ImGui::Button("Load Nucleuses"))
+                        ParseNucleuses();
                     ImGui::EndTabItem();
                 }
                 ImGui::EndTabBar();
@@ -73,9 +77,9 @@ public:
             ImGui::TableHeadersRow();
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
-            bool open = ImGui::TreeNodeEx("<root>");
+            bool open = ImGui::TreeNodeEx("Constants");
             ImGui::TableNextColumn();
-            ImGui::TextDisabled("--");
+            ImGui::TextDisabled("%d",engine->GetConstMgr().Map().size());
             if (open)
             {
                 for (auto& val : engine->GetConstMgr().Map())
@@ -87,6 +91,23 @@ public:
                     std::stringstream ss;
                     ss << val.second;
                     ImGui::Text(ss.str().c_str());
+                }
+                ImGui::TreePop();
+            }
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            bool nucopen = ImGui::TreeNodeEx("Nucleuses");
+            ImGui::TableNextColumn();
+            ImGui::TextDisabled("%d", nucleusMgr->m_Nucs.size());
+            if (nucopen)
+            {
+                for (auto& nuc : nucleusMgr->m_Nucs)
+                {
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("Symbol");
+                    ImGui::TableNextColumn();
+                    ImGui::Text(nuc->symbol.c_str());
                 }
                 ImGui::TreePop();
             }
@@ -111,9 +132,34 @@ public:
             
         return ret;
     }
+
+    bool ParseNucleuses()
+    {
+        luaconf::Value config;
+        bool ret = luaconf::Parse(rsrc->ReadEngineConfig("nucleus"), config);
+        if (ret && (config.Type() == luaconf::ValueType::TYPE_ARRAY))
+        {
+            for (auto& val : config.Get<luaconf::array_t>())
+            {
+                if (val.Type() == luaconf::ValueType::TYPE_OBJECT)
+                {
+                    nuclear::atomic::Nucleus nuc;
+                    nuc.symbol = val["symbol"].Get<luaconf::string_t>();
+                    nuc.protons = val["protons"].Get<luaconf::int_t>();
+                    nuc.neutrons = val["neutrons"].Get<luaconf::int_t>();
+                    nucleusMgr->AddNucleus(nuc);
+                }
+            }
+        }
+        if (!ret)
+            Console::get()->error("[NON FATAL] Failed to parse config %s...\n", "nucleus");
+            
+        return ret;
+    }
 private:
     nuclear::Engine* engine;
     ResourceManager* rsrc;
+    nuclear::atomic::NucleusManager* nucleusMgr;
     bool m_forceLoad = false; // force the loading of constants (hot reload for example)
 };
 
