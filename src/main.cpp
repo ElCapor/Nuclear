@@ -19,7 +19,6 @@ public:
     {
         engine = new nuclear::Engine();
         rsrc = new ResourceManager();
-        nucleusMgr = new nuclear::atomic::NucleusManager();
     }
 
     void Init() override
@@ -53,7 +52,6 @@ public:
         }
     }
 
-    // TODO : Replace this paste with an actual function
     void LoadConstants()
     {
         // replace with all ur constant logic
@@ -98,10 +96,10 @@ public:
             ImGui::TableNextColumn();
             bool nucopen = ImGui::TreeNodeEx("Nucleuses");
             ImGui::TableNextColumn();
-            ImGui::TextDisabled("%d", nucleusMgr->m_Nucs.size());
+            ImGui::TextDisabled("%d", engine->GetNucleusMgr().m_Nucs.size());
             if (nucopen)
             {
-                for (auto& nuc : nucleusMgr->m_Nucs)
+                for (auto& nuc : engine->GetNucleusMgr().m_Nucs)
                 {
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
@@ -147,7 +145,7 @@ public:
                     nuc.symbol = val["symbol"].Get<luaconf::string_t>();
                     nuc.protons = val["protons"].Get<luaconf::int_t>();
                     nuc.neutrons = val["neutrons"].Get<luaconf::int_t>();
-                    nucleusMgr->AddNucleus(nuc);
+                    engine->GetNucleusMgr().AddNucleus(nuc);
                 }
             }
         }
@@ -159,7 +157,6 @@ public:
 private:
     nuclear::Engine* engine;
     ResourceManager* rsrc;
-    nuclear::atomic::NucleusManager* nucleusMgr;
     bool m_forceLoad = false; // force the loading of constants (hot reload for example)
 };
 
