@@ -85,6 +85,24 @@ public:
         }
     }
 };
+
+namespace utils
+{
+    /// @brief Calculate the atomic density of a nucleus at a spcific temperature
+    /// @param t temperature °K
+    /// @param it initial temperature
+    /// @param cle linear expension coefficient
+    /// @param dit initial density temperature
+    /// @param mm molar mass
+    /// @param ac avogadro constant
+    /// @return the atomic density
+    double calculateAtomicDensity(double t, double it, double cle,double dit,double mm, double ac)
+    {
+        double density = dit*(1+cle*(t-it));
+        double atomic_density = (ac*density)/mm;
+        return atomic_density;
+    }
+}
 };
 
 #endif /* ATOMIC_HPP */
